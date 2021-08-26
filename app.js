@@ -1,13 +1,25 @@
 var bill = document.querySelector("#bill");
 var cash = document.querySelector("#cash");
+var nextButton = document.querySelector("#next");
 var checkButton = document.querySelector("#check");
-var errorMsg = document.querySelector("#error-msg");
+var message = document.querySelector("#message");
 
-const notes = [1000, 500, 100, 50, 20, 10, 5, 1];
+const notes = [2000, 500, 100, 20, 10, 5, 1];
 
-checkButton.addEventListener("click", buttonClickHandler);
+checkButton.addEventListener("click", checkButtonHandler);
+nextButton.addEventListener("click", nextButtonHandler);
 
-function buttonClickHandler() {
+function nextButtonHandler() {
+  if (bill.value !== "") {
+    cash.style.display = "block";
+    checkButton.style.display = "block";
+    message.innerText = "";
+  } else {
+    message.innerText = "Enter bill amount first";
+  }
+}
+
+function checkButtonHandler() {
   // convert string to integer
   validateAmounts(parseInt(bill.value), parseInt(cash.value));
 }
@@ -16,11 +28,11 @@ function validateAmounts(billAmount, cashGiven) {
   // check whether the user entered positive numbers
   if (((Math.sign(billAmount) === 1) && (Math.sign(cashGiven) === 1)) && (cashGiven > billAmount)) {
     calculateChange(billAmount, cashGiven);
-    errorMsg.innerText = "Good job";
+    message.innerText = "Good job";
   } else if (bill.value === "" || cash.value === "") {
-    errorMsg.innerText = "Enter both inputs first";
+    message.innerText = "Enter both amounts first";
   } else {
-    errorMsg.innerText = "Cash given should be more than the bill amount";
+    message.innerText = "Cash given should be more than the bill amount and both must be positive numbers";
   }
 }
 

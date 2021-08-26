@@ -1,0 +1,7 @@
+input#bill, button#next {
+  display: block;
+}
+
+input#cash, button#check {
+  display: none;
+}
