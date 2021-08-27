@@ -1,38 +1,82 @@
 var bill = document.querySelector("#bill");
-var cash = document.querySelector("#cash");
 var nextButton = document.querySelector("#next");
+var cashLabel = document.querySelector("#label-cash");
+var cash = document.querySelector("#cash");
 var checkButton = document.querySelector("#check");
+var messageText = document.querySelector("#message-text");
 var message = document.querySelector("#message");
+var changeTable = document.querySelector("#change-table");
 
 const notes = [2000, 500, 100, 20, 10, 5, 1];
 
-checkButton.addEventListener("click", checkButtonHandler);
 nextButton.addEventListener("click", nextButtonHandler);
+checkButton.addEventListener("click", checkButtonHandler);
 
 function nextButtonHandler() {
+  // convert string to integer
+  var billAmount = parseInt(bill.value);
+  
+  // check whether input box is empty or not
   if (bill.value !== "") {
-    cash.style.display = "block";
-    checkButton.style.display = "block";
-    message.innerText = "";
+    // check whether the user entered positive numbers
+    if (Math.sign(billAmount) === 1) {
+      cashLabel.style.display = "block";
+      cash.style.display = "block";
+      checkButton.style.display = "block";
+      messageText.style.display = "none";
+      changeTable.style.display = "none";
+    } else {
+      messageText.style.display = "block";
+      messageText.innerText = "Input must be a positive number.";
+      changeTable.style.display = "none";
+    }
   } else {
-    message.innerText = "Enter bill amount first";
+    messageText.style.display = "block";
+    messageText.innerText = "Enter bill amount first.";
+    changeTable.style.display = "none";
   }
 }
 
 function checkButtonHandler() {
   // convert string to integer
-  validateAmounts(parseInt(bill.value), parseInt(cash.value));
+  var billAmount = parseInt(bill.value);
+  var cashGiven = parseInt(cash.value);
+  
+  // check whether input box is empty or not
+  if ((bill.value !== "") && (cash.value !== "")) {
+    // check whether the user entered positive numbers
+    if ((Math.sign(billAmount) === 1) && (Math.sign(cashGiven) === 1)) {
+      messageText.style.display = "block";
+      messageText.innerText = "Good Job.";
+      validateAmounts(billAmount, cashGiven);
+    } else {
+      messageText.style.display = "block";
+      messageText.innerText = "Both inputs must be positive numbers.";
+    }
+  } else if ((bill.value === "") && (cash.value === "")) {
+    messageText.style.display = "block";
+    messageText.innerText = "Enter both bill amount and cash given amount.";
+    changeTable.style.display = "none";
+  } else if ((bill.value === "") || (cash.value === "")) {
+    messageText.style.display = "block";
+    messageText.innerText = "One out of two amounts is missing. Please enter both amounts.";
+    changeTable.style.display = "none";
+  }
 }
 
 function validateAmounts(billAmount, cashGiven) {
-  // check whether the user entered positive numbers
-  if (((Math.sign(billAmount) === 1) && (Math.sign(cashGiven) === 1)) && (cashGiven > billAmount)) {
+  if (cashGiven > billAmount) {
     calculateChange(billAmount, cashGiven);
-    message.innerText = "Good job";
+    messageText.style.display = "block";
+    messageText.innerText = "Return Change";
+    message.style.display = "block";
+    changeTable.style.display = "block";
   } else if (bill.value === "" || cash.value === "") {
-    message.innerText = "Enter both amounts first";
+    messageText.style.display = "block";
+    messageText.innerText = "Enter both bill amount and cash given amount first.";
   } else {
-    message.innerText = "Cash given should be more than the bill amount and both must be positive numbers";
+    messageText.style.display = "block";
+    messageText.innerText = "Cash given should be more than the bill amount.";
   }
 }
 

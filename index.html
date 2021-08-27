@@ -6,14 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cash Register App - mark 10</title>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 </head>
 
 <body>
-  <input id="bill" type="number" placeholder="enter bill amount"></input>
-  <button id="next">Next</button>
-  <input id="cash" type="number" placeholder="enter cash given"></input>
-  <button id="check">Check</button>
-  <p id="message"></p>
+  <section>
+    <h1>Cash Register App</h1>
+    <h4>Enter the bill amount and cash given by the customer to know the minimum number of notes to return</h4>
+    <hr>
+
+    <label for="bill-amount">Bill Amount</label>
+    <input id="bill" type="number"></input>
+    
+    <button id="next">Next</button>
+    
+    <label id="label-cash" for="cash-given">Cash Given</label>
+    <input id="cash" type="number"></input>
+    
+    <button id="check">Check</button>
+    <hr>
+
+    <h4 id="message-text"></h4>
+    <div id="message">
+      <table id="change-table">
+        <tbody>
+          <tr>
+            <th>No. of Notes</th>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+            <td class="no-of-notes"></td>
+          </tr>
+          <tr>
+            <th>Note</th>
+            <td>2000</td>
+            <td>500</td>
+            <td>100</td>
+            <td>20</td>
+            <td>10</td>
+            <td>5</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <script src="/app.js" type="text/javascript"></script>
 </body>
