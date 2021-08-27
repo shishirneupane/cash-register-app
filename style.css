@@ -12,12 +12,23 @@ section {
   text-align: center;
 }
 
-input#bill, button#next {
+input#bill,
+button#next {
   display: block;
 }
 
-input#cash, button#check, label#label-cash {
+input#cash,
+button#check,
+label#label-cash {
   display: none;
+}
+
+a#github-repo {
+  color: #231f20;
+  font-size: 3rem;
+  position: absolute;
+  right: 1.25rem;
+  top: 0.5rem;
 }
 
 h1 {
@@ -70,22 +81,25 @@ button {
 
 h4#message-text {
   display: none;
+  font-size: 1.4rem;
 }
 
-div#message {
-  display: none;
-  margin: auto;
-}
-
+/* return change table */
 table#change-table {
   display: none;
-  border: 1px solid #da0808;
-  padding: 0.5rem 0;
-  margin: 0.5rem auto 0;
-  max-width: 100%;
-  width: 700px;
+  margin: 1rem auto 0;
+  border-collapse: collapse;
 }
 
 table#change-table th {
   font-weight: bolder;
+  font-size: 1.1rem;
+}
+
+table#change-table th,
+td {
+  border: 2px solid #da0808;
+  /* good for mobile phone as well */
+  /* padding: 0.44rem; */
+  padding: 1rem 1.3rem;
 }

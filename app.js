@@ -4,7 +4,6 @@ var cashLabel = document.querySelector("#label-cash");
 var cash = document.querySelector("#cash");
 var checkButton = document.querySelector("#check");
 var messageText = document.querySelector("#message-text");
-var message = document.querySelector("#message");
 var changeTable = document.querySelector("#change-table");
 
 const notes = [2000, 500, 100, 20, 10, 5, 1];
@@ -15,7 +14,7 @@ checkButton.addEventListener("click", checkButtonHandler);
 function nextButtonHandler() {
   // convert string to integer
   var billAmount = parseInt(bill.value);
-  
+
   // check whether input box is empty or not
   if (bill.value !== "") {
     // check whether the user entered positive numbers
@@ -41,7 +40,7 @@ function checkButtonHandler() {
   // convert string to integer
   var billAmount = parseInt(bill.value);
   var cashGiven = parseInt(cash.value);
-  
+
   // check whether input box is empty or not
   if ((bill.value !== "") && (cash.value !== "")) {
     // check whether the user entered positive numbers
@@ -69,8 +68,7 @@ function validateAmounts(billAmount, cashGiven) {
     calculateChange(billAmount, cashGiven);
     messageText.style.display = "block";
     messageText.innerText = "Return Change";
-    message.style.display = "block";
-    changeTable.style.display = "block";
+    changeTable.style.display = "table";
   } else if (bill.value === "" || cash.value === "") {
     messageText.style.display = "block";
     messageText.innerText = "Enter both bill amount and cash given amount first.";
@@ -86,10 +84,10 @@ function calculateChange(billAmount, cashGiven) {
   for (let i = 0; i < notes.length; i++) {
     var noOfNotes = Math.trunc(returnAmount / notes[i]);
     console.log(notes[i] + " rupee notes: " + noOfNotes);
-    
+
     // updating the amount to be returned in every loop (for every note)
     returnAmount = returnAmount % notes[i];
-    
+
     // alternative method or main logic given in below line
     // returnAmount = returnAmount - (notes[i] * noOfNotes);
     console.log("Current return amount:", returnAmount);
