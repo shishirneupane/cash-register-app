@@ -5,6 +5,8 @@ var cash = document.querySelector("#cash");
 var checkButton = document.querySelector("#check");
 var messageText = document.querySelector("#message-text");
 var changeTable = document.querySelector("#change-table");
+var trs = changeTable.getElementsByTagName("tr");
+var tds = trs[0].getElementsByTagName("td");
 
 const notes = [2000, 500, 100, 20, 10, 5, 1];
 
@@ -22,17 +24,15 @@ function nextButtonHandler() {
       cashLabel.style.display = "block";
       cash.style.display = "block";
       checkButton.style.display = "block";
-      messageText.style.display = "none";
-      changeTable.style.display = "none";
+      hideMessageText();
+      hideChangeTable();
     } else {
-      messageText.style.display = "block";
-      messageText.innerText = "Input must be a positive number.";
-      changeTable.style.display = "none";
+      showMessageText("Input must be a positive number.");
+      hideChangeTable();
     }
   } else {
-    messageText.style.display = "block";
-    messageText.innerText = "Enter bill amount first.";
-    changeTable.style.display = "none";
+    showMessageText("Enter bill amount first.");
+    hideChangeTable();
   }
 }
 
@@ -45,45 +45,44 @@ function checkButtonHandler() {
   if ((bill.value !== "") && (cash.value !== "")) {
     // check whether the user entered positive numbers
     if ((Math.sign(billAmount) === 1) && (Math.sign(cashGiven) === 1)) {
-      messageText.style.display = "block";
-      messageText.innerText = "Good Job.";
       validateAmounts(billAmount, cashGiven);
     } else {
-      messageText.style.display = "block";
-      messageText.innerText = "Both inputs must be positive numbers.";
+      showMessageText("Both inputs must be positive numbers.");
+      hideChangeTable();
     }
   } else if ((bill.value === "") && (cash.value === "")) {
-    messageText.style.display = "block";
-    messageText.innerText = "Enter both bill amount and cash given amount.";
-    changeTable.style.display = "none";
+    showMessageText("Enter both bill amount and cash given amount.");
+    hideChangeTable();
   } else if ((bill.value === "") || (cash.value === "")) {
-    messageText.style.display = "block";
-    messageText.innerText = "One out of two amounts is missing. Please enter both amounts.";
-    changeTable.style.display = "none";
+    showMessageText("One out of two amounts is missing. Please enter both amounts.");
+    hideChangeTable();
   }
 }
 
 function validateAmounts(billAmount, cashGiven) {
   if (cashGiven > billAmount) {
-    calculateChange(billAmount, cashGiven);
+    var returnAmount = cashGiven - billAmount;
     messageText.style.display = "block";
-    messageText.innerText = "Return Change";
+    messageText.innerText = "Return Change = " + returnAmount;
     changeTable.style.display = "table";
+    calculateChange(returnAmount);
   } else if (bill.value === "" || cash.value === "") {
-    messageText.style.display = "block";
-    messageText.innerText = "Enter both bill amount and cash given amount first.";
+    showMessageText("Enter both bill amount and cash given amount.");
+    hideChangeTable();
   } else {
-    messageText.style.display = "block";
-    messageText.innerText = "Cash given should be more than the bill amount.";
+    showMessageText("Cash given should be more than the bill amount.");
+    hideChangeTable();
   }
 }
 
-function calculateChange(billAmount, cashGiven) {
-  var returnAmount = cashGiven - billAmount;
+function calculateChange(returnAmount) {
   console.log("Initial return amount:", returnAmount);
   for (let i = 0; i < notes.length; i++) {
     var noOfNotes = Math.trunc(returnAmount / notes[i]);
-    console.log(notes[i] + " rupee notes: " + noOfNotes);
+    console.log(notes[i] + " rupee notes:", noOfNotes);
+
+    // send the current loop index(i) too
+    updateInTable(i, noOfNotes);
 
     // updating the amount to be returned in every loop (for every note)
     returnAmount = returnAmount % notes[i];
@@ -93,4 +92,25 @@ function calculateChange(billAmount, cashGiven) {
     console.log("Current return amount:", returnAmount);
   }
   console.log("Final return amount:", returnAmount);
+}
+
+function updateInTable(i, noOfNotes) {
+  // Array(tds) done to create an array of the 7 empty <td> elements and map over them to render 'noOfNotes' there
+  Array(tds).map(td => {
+    console.log(td[i]);
+    td[i].innerText = noOfNotes;
+  });
+}
+
+function hideMessageText() {
+  messageText.style.display = "none";
+}
+
+function showMessageText(msg) {
+  messageText.style.display = "block";
+  messageText.innerText = msg;
+}
+
+function hideChangeTable() {
+  changeTable.style.display = "none";
 }
