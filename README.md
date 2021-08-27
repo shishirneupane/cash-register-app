@@ -9,3 +9,5 @@ A cash register web app that can tell the user the amount of change to return/re
 1. JavaScript
 
 ## Screenshots:
+
+![image](https://user-images.githubusercontent.com/58262449/131128654-8388e480-82b5-4380-988a-e0e8804549cf.png)
