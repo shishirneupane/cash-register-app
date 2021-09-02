@@ -66,9 +66,6 @@ function validateAmounts(billAmount, cashGiven) {
     messageText.innerText = "Return Change = " + returnAmount;
     changeTable.style.display = "table";
     calculateChange(returnAmount);
-  } else if (bill.value === "" || cash.value === "") {
-    showMessageText("Enter both bill amount and cash given amount.");
-    hideChangeTable();
   } else {
     showMessageText("Cash given should be more than the bill amount.");
     hideChangeTable();
